@@ -1,0 +1,46 @@
+<div class="container">
+    <h1>Crear Loans</h1>
+
+    <form>
+        <mat-form-field>
+            <mat-label>Identificador</mat-label>
+            <input type="number" matInput placeholder="Identificador" [(ngModel)]="loans.id" name="id" disabled>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Nombre de Juego</mat-label>
+            <input type="text" matInput placeholder="Nombre del Juego" (keyup)="handleNameGame($event)" [(ngModel)]="loans.nameGame" name="nameGame"
+                required>
+            <mat-error>El nombre no puede estar vacío</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Nombre de Cliente</mat-label>
+            <input type="text" matInput placeholder="Nombre del Cliente" (keyup)="handleNameClient($event)" [(ngModel)]="loans.nameClient" name="nameClient" required>
+            <mat-error>El nombre no puede estar vacío</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Fecha de inicio del Préstamo</mat-label>
+            <input type="datetime-local" step="1" matInput placeholder="Fecha de inicio del Préstamo" (change)="handleLoanDate($event)" [(ngModel)]="loans.loanDate" name="loanDate"
+                required>
+            <mat-error>El nombre no puede estar vacío</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field>
+            <mat-label>Fecha de devolución del Préstamo</mat-label>
+            <input type="datetime-local" step="1" [min]="loans.loanDate" matInput placeholder="Fecha de devolución del Préstamo" (change)="handleReturnDate($event)" [(ngModel)]="loans.returnDate" name="returnDate"
+                required>
+            
+            <mat-error>
+                La fecha de prestamo no puede ser mayor a la de devolución
+            </mat-error>
+            
+        </mat-form-field>
+    </form>
+
+    <div class="buttons">
+        <button mat-stroked-button (click)="onClose()">Cerrar</button>
+        <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+    </div>
+</div>

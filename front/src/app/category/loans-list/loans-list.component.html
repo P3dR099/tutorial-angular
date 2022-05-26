@@ -1,0 +1,67 @@
+<div class="container">
+    <h1>Listado de Categorías</h1>
+
+    <div style="display: flex;
+    justify-content: space-around;">
+        <mat-form-field appearance="standard">
+            <mat-label>Filtrar por titulo</mat-label>
+            <input matInput (keyup)="applyFilter($event, 'nameGame')" [(ngModel)]="valueTitle" placeholder="Search by title" name="filter-title" #input>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Filtrar por cliente</mat-label>
+            <input matInput (keyup)="applyFilter($event, 'nameClient')" [(ngModel)]="valueClient" placeholder="Search by client" #input>
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Filtrar por fecha</mat-label>
+            <input type="date" matInput (keyup)="applyFilter($event, 'loanDate')" [(ngModel)]="valueDate" placeholder="Search by date" #input>
+        </mat-form-field>
+        <!-- <button style="height: 4rem;" mat-raised-button>Buscar por fecha</button> -->
+        <button style="height: 4rem;" (click)="clearFilters()" mat-raised-button>Clear filters</button>
+    </div>
+    <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> Identificador </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="nameGame">
+            <mat-header-cell *matHeaderCellDef> Nombre categoría </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.nameGame}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="nameClient">
+            <mat-header-cell *matHeaderCellDef> Nombre cliente </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.nameClient}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="loanDate">
+            <mat-header-cell *matHeaderCellDef> fecha de préstamo </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.loanDate | date:'dd/MM/yyyy'}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="returnDate">
+            <mat-header-cell *matHeaderCellDef> fecha de devolución</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.returnDate | date:'dd/MM/yyyy'}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button color="primary">
+                    <mat-icon (click)="editCategory(element)">edit</mat-icon>
+                </button>
+                <button mat-icon-button color="accent">
+                  <mat-icon (click)="deleteCategory(element)">clear</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator 
+               [pageSize]="pageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               (page)="pageEvent = $event"
+               aria-label="Select page" showFirstLastButtons></mat-paginator>
+    <div class="buttons">
+        <button mat-flat-button color="primary" (click)="createCategory()">Nueva categoría</button>
+    </div>
+</div>
